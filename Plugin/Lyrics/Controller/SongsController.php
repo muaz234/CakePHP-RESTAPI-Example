@@ -33,11 +33,15 @@ class SongsController extends LyricsAppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->layout = false;
 		if (!$this->Song->exists($id)) {
-			throw new NotFoundException(__d('croogo', 'Invalid %s', __d('lyrics', 'song')));
+			$response = array('status' => 'Data not fetched');
 		}
 		$options = array('conditions' => array('Song.' . $this->Song->primaryKey => $id));
-		$this->set('song', $this->Song->find('first', $options));
+		$result = $this->Song->find('first', $options);
+		$response = array('message' => 'Success', 'data' => $result);
+		$this->set('song', $result);
+		echo json_encode($response);
 	}
 
 /**
@@ -67,6 +71,7 @@ class SongsController extends LyricsAppController {
 			}
 		}
 		$this->set('response', $response);
+		echo json_encode($response);
 	}
 
 /**
@@ -77,18 +82,20 @@ class SongsController extends LyricsAppController {
  * @return void
  */
 	public function edit($id = null) {
-		if (!$this->Song->exists($id)) {
-			throw new NotFoundException(__d('croogo', 'Invalid %s', __d('lyrics', 'song')));
-		}
+		$this->layout = false;
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Song->saveAssociated($this->request->data)) {
-				$this->flash(__d('croogo', '%s has been saved', __d('lyrics', 'song')), array('action' => 'index'));
+			$this->Song->id = $id;
+			if ($this->Song->save($this->request->data)) {
+				$response = array('status' => 'Updated successful', 'message' => 'Value successfully added');
 			} else {
+				$response = array('status' => 'Failed', 'message' => 'Failed to update the data. Please retry');
 			}
 		} else {
 			$options = array('conditions' => array('Song.' . $this->Song->primaryKey => $id));
 			$this->request->data = $this->Song->find('first', $options);
 		}
+
+		echo json_encode($response);
 	}
 
 /**
@@ -100,15 +107,16 @@ class SongsController extends LyricsAppController {
  * @return void
  */
 	public function delete($id = null) {
+		$this->layout = false;
 		$this->Song->id = $id;
 		if (!$this->Song->exists()) {
-			throw new NotFoundException(__d('croogo', 'Invalid %s', __d('lyrics', 'song')));
+			$response = array('message' => 'Song does not exist');
 		}
-		$this->request->onlyAllow('post', 'delete');
 		if ($this->Song->delete()) {
-			// $this->flash((__d('croogo', '%s deleted', __d('lyrics', 'Song')), array('action' => 'index'));
+		$response = array('status' => 'success', 'message' => 'Song successfully deleted');
+		}else {
+			$response = array('status' => 'failed', 'message' => 'Song failed to be deleted');
 		}
-		$this->flash(__d('croogo', '%s was not deleted', __d('lyrics', 'Song')), array('action' => 'index'));
-		return $this->redirect(array('action' => 'index'));
+		echo json_encode($response);
 	}
 }
