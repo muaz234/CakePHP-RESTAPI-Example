@@ -3,9 +3,10 @@
 This is a REST API created with CakePHP + Croogo CMS
 
 In this repo i have uploaded all the files. You may clone in a freshly baked CakePHP project.
-__
 
-** To run the project:
+
+
+* To run the project:
 ```
 1. Download [Croogo](https://downloads.croogo.org/) and choose croogo2.3.3
 2. Unzip the file and place it on /var/www/html or xampp/htdocs if you are using XAMPP. You should be able to configure this.
@@ -22,3 +23,5 @@ __
 ```
 
 Feel free to comment or ask anything via email at ahmedmuaz0152@gmail.com or Telegram at  t.me/muaz_ahmed
+
+:octocat: 
