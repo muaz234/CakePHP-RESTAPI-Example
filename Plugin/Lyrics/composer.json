@@ -1,0 +1,21 @@
+{
+    "name": "cakephp/Lyrics",
+    "description": "REST API for lyrics ",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "debug", "kit"],
+    "homepage": "https://github.com/cakephp/debug_kit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Muaz",
+            "homepage": "http://google.com",
+            "role": "Author"
+        },
+        {
+            "name": "CakePHP Community",
+            "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
+        }
+    ]
+    
+
+}
